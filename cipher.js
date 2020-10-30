@@ -33,7 +33,7 @@ class Cipher {
 	init(code) {
 		if (!code || !/[A-Fa-f\d]{7}/.test(code)) {
 			this.characters = Array(7).fill(0).map(() => String.fromCharCode(Math.floor(Math.random() * 46) + 48));
-			this.code = this.characters.map(ch => ch.charCodeAt(0).toString(48)).join("");
+			this.code = this.characters.map(ch => ch.charCodeAt(0).toString(16)).join("");
 		} else {
 			this.code = code;
 			this.characters = code.match(/.{1,2}(?=(.{2})+(?!.))|.{1,2}$/g).map(code => String.fromCharCode(parseInt(code, 16)));

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Encryptor and Decryptor | Cipher.js</title>
+	<style>
+		textarea, input[type="text"] {
+			resize: none;
+            font-family: 'Courier New', Courier, monospace;
+		}
+
+		textarea::placeholder {
+			text-decoration: underline;
+			text-align: center;
+			font-size: larger;
+		}
+
+		body :not(td):not(input):not([class]) {
+			height: 100%;
+			width: 100%;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		table {
+			position: absolute;
+			top: 0;
+			left: 0;
+			border-spacing: 2px;
+		}
+
+		input:not([class]) {
+			position: absolute;
+			display: inline;
+			bottom: 5px;
+			right: 3px;
+		}
+
+        [class], ::placeholder {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <script src="cipher.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+
+<body>
+	<table>
+		<tbody>
+			<tr>
+				<td>
+					<textarea id="text" placeholder="Decrypted"></textarea>
+				</td>
+				<td>
+					<textarea placeholder="Encrypted" id="ciph"></textarea>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<form action="#" method="GET" onsubmit="return false;">
+		<input id="code" type="text" pattern="[A-Fa-f\d]{14}" autocomplete="off" title="Code must be 14 characters long and hexadecimal" placeholder="Security code" />
+		<input type="submit" value="OK" />
+		<input type="button" value="Random" onclick="cipher.init(); code.value = cipher.code; ciph.value = cipher.encode(text.value);" style="transform: translateX(calc(-20ch - 33%));" />
+	</form>
+	<script>
+		const ciph = document.getElementById("ciph");
+		const text = document.getElementById("text");
+		const code = document.getElementById("code");
+		const cipher = new Cipher();
+        code.value = cipher.code;
+		ciph.addEventListener("keyup", () => {
+            try {
+                text.value = cipher.decode(ciph.value);
+            } catch (e) {
+                Swal.fire("Error", e.message, "error");
+            }
+		});
+		text.addEventListener("keyup", () => {
+			ciph.value = cipher.encode(text.value);
+		});
+		code.parentElement.addEventListener("submit", function () {
+			cipher.init(code.value);
+			ciph.value = cipher.encode(text.value);
+			return false;
+		});
+	</script>
