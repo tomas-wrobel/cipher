@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "lib": [
+            "ES2019.Object",
+            "ES2019.Array",
+            "ES2016.Array.Include",
+            "ES2015.Iterable",
+            "ES2017",
+            "DOM"
+        ],
+        "downlevelIteration": true
+    }
+}
